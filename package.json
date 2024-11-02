@@ -1,0 +1,24 @@
+{
+  "name": "@weerly_3/pixi-framework",
+  "version": "1.0.0",
+  "description": "pixi-js framework-like library to make JS game development more easier and quicker.",
+  "main": "index.js",
+  "engines": {
+    "node": "^14.20.0 || ^16.13.0 || >=18.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Weerly/pixi-framework-library.git"
+  },
+  "keywords": [
+    "pixiJS",
+    "pixi-framework",
+    "js-game-development"
+  ],
+  "author": "weerly_3 (Mykhailo Chumak)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Weerly/pixi-framework-library/issues"
+  },
+  "homepage": "https://github.com/Weerly/pixi-framework-library#readme"
+}
