@@ -50,6 +50,6 @@ export interface SceneEventHandler {
  */
 export interface SceneLoopHandler {
     state: (delta: Ticker) => void
-    setup?: () => void;
+    setupTicker?: () => void;
     gameLoop?: (delta: Ticker) => void;
 }

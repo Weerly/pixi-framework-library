@@ -4,6 +4,7 @@ import {Type} from "./scene-mapper";
 import {Application, Ticker} from "pixi.js";
 import { SceneContent } from "../helpers/decorators";
 import {onKeyDown} from "../helpers/event-wrappers";
+import {isSceneSetup} from "../helpers/type-definition.ts";
 
 /**
  * A generic class that acts as a wrapper for a scene module and provides access
@@ -38,7 +39,6 @@ export async function SceneLoader(scene: Type<GameScene>): Promise<void> {
     const sceneApplication= await initializeApplication(scene);
 
     initializeSceneState(sceneContent, sceneApplication);
-    setupClickEvent();
 }
 
 /**
@@ -61,15 +61,15 @@ function initializeSceneState(
     sceneContent: SceneContent,
     sceneApplication: GameScene
 ): void {
-    const isSetupDefined = 'setup' in sceneApplication;
+    const isSetupTickerDefined = isSceneSetup(sceneApplication);
     const loopHandler = sceneApplication as unknown as SceneLoopHandler;
 
-    if (isSetupDefined) {
-        loopHandler.setup?.()
+    if (isSetupTickerDefined) {
+        loopHandler.setupTicker?.()
         return;
     }
 
-    if (sceneContent.isTickerOn && !isSetupDefined) {
+    if (sceneContent.isTickerOn && !isSetupTickerDefined) {
         const app = application();
 
         initTicker(app, sceneContent, loopHandler);
@@ -135,9 +135,10 @@ async function initializeApplication(scene: Type<GameScene>): Promise<GameScene>
 /**
  * Sets up a global click event listener on the document.
  * The event listener logs the event object to the console whenever a click occurs.
- *
+ * @todo temporary disabled for future release
  * @return {void} This method does not return a value.
  */
+// @ts-ignore
 function setupClickEvent(): void {
     document.addEventListener('click', (event) => {
         console.log(event);
@@ -210,7 +211,6 @@ function initTicker(app: Application, instance: SceneContent, scene: SceneLoopHa
         const gameLoopFunction = scene[gameLoopFunctionName as keyof object] as unknown as (delta: Ticker) => void;
 
         if (gameLoopFunction || scene.gameLoop) {
-            // app.ticker.add((delta: Ticker) => (gameLoopFunction ?? scene.gameLoop).bind(scene)(delta));
             addGameLoopToTicker(app, (gameLoopFunction ?? scene.gameLoop).bind(scene))
         }
     } else {
@@ -226,15 +226,13 @@ function initTicker(app: Application, instance: SceneContent, scene: SceneLoopHa
  * @return {void} Does not return a value.
  */
 function setStateFunction(instance: SceneContent, scene: SceneLoopHandler): void {
-    const isSetupDefined = 'setup' in scene;
-    if (!isSetupDefined) {
-        const stateFunctionName = instance.stateFunction ?? 'play';
-        const stateFunction = scene[stateFunctionName as keyof object] as unknown as (delta: Ticker) => void;
-        if (stateFunction) {
-            scene.state = stateFunction.bind(scene);
-        } else {
-            throw new Error('state function is missing')
-        }
+    const stateFunctionName = instance.stateFunction ?? 'play';
+    const stateFunction = scene[stateFunctionName as keyof object] as unknown as (delta: Ticker) => void;
+
+    if (stateFunction) {
+        scene.state = stateFunction.bind(scene);
+    } else {
+        throw new Error('state function is missing')
     }
 }
 

@@ -21,16 +21,16 @@ export function isSceneEventHandler(scene: object): boolean {
  * @return {boolean} Returns true if the scene object has a "setup" property, otherwise false.
  */
 export function isSceneSetup(scene: object): boolean {
-    return scene.hasOwnProperty("setup");
+    return scene.hasOwnProperty("setupTicker");
 }
 
 /**
- * Checks whether the given scene object contains a "setup" property,
+ * Checks whether the given scene object contains a "gammeLoop" property,
  * thereby determining if it is part of the game loop.
  *
  * @param {object} scene - The scene object to be checked.
  * @return {boolean} Returns true if the scene object contains a "setup" property; otherwise, false.
  */
 export function isSceneGameLoop(scene: object): boolean {
-    return scene.hasOwnProperty("setup");
+    return scene.hasOwnProperty("gameLoop");
 }

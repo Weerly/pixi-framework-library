@@ -1,4 +1,4 @@
-import { SceneMapperModule, Type, Navigator } from "./scene-mapper";
+import { SceneMapperModule, Type, NavigateToScene } from "./scene-mapper";
 import {GameModuleContent} from "../helpers/decorators";
 import {initApplication} from "./application";
 
@@ -35,5 +35,5 @@ export async function GameLoader<M>(module: Type<M>): Promise<void> {
     const instance = new ModuleWrapper(module).ModuleProperties;
     await initApplication(instance.appConfiguration);
     new SceneMapperModule(instance.sceneMapper);
-    Navigator(instance.startScene);
+    NavigateToScene(instance.startScene);
 }
