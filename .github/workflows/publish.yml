@@ -13,8 +13,9 @@ jobs:
         with:
           node-version: '14.x'
           registry-url: 'https://registry.npmjs.org'
+          scope: '@weerly_3'
       - name: Install dependencies and build 🔧
-        run: npm ci && npm run build
+        run: npm i && npm run build
       - name: Publish package on NPM 📦
         run: npm publish
         env:
