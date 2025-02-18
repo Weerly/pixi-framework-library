@@ -1,6 +1,6 @@
 {
   "name": "@weerly_3/pixi-framework",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "pixi-js framework-like library to make JS game development more easier and quicker.",
   "type": "module",
   "main": "dist/index.js",
