@@ -1,8 +1,5 @@
 name: Publish to NPM
 on:
-  push:
-    branches:
-      - 'dev-*'
   release:
     types: [created]
 jobs:
