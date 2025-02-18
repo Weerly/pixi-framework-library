@@ -39,11 +39,13 @@ export interface SceneMapper<T> {
 let currentScene: string | null = null;
 
 /**
+ * @function ReloadScene
+ *
  * ReloadScene function is used to refresh or reload the current scene in an application.
  * If a current scene is active, it navigates to the same scene again by invoking NavigateToScene.
  * This function ensures that the currentScene variable holds a valid reference before performing navigation.
  */
-export const ReloadScene = function () {
+export const ReloadScene = ()=> {
     if (currentScene) {
         NavigateToScene(currentScene);
     }
@@ -57,6 +59,7 @@ export const ReloadScene = function () {
  * @returns {void}
  */
 export const NavigateToScene = (name: string): void => {
+    currentScene = name;
     SceneMapperObservable.next(name);
 }
 

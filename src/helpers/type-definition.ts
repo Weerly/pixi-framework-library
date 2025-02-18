@@ -21,7 +21,7 @@ export function isSceneEventHandler(scene: object): boolean {
  * @return {boolean} Returns true if the scene object has a "setup" property, otherwise false.
  */
 export function isSceneSetup(scene: object): boolean {
-    return scene.hasOwnProperty("setupTicker");
+    return "setupTicker" in scene;
 }
 
 /**
