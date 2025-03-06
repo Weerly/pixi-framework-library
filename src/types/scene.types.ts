@@ -1,4 +1,4 @@
-import {Ticker} from "pixi.js";
+import {Application, Ticker} from "pixi.js";
 
 /**
  * Represents a callback function that is invoked when an event occurs.
@@ -14,6 +14,7 @@ export type EventCallBack = (args?: Event) => void;
  * Represents a game scene interface with methods to handle asset loading, scene setup, and scene start behavior.
  */
 export interface GameScene {
+    app: Application;
     loadAssets(): Promise<void>;
     fillScene(): Promise<void>;
     startScene(): Promise<void>;

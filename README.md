@@ -1,3 +1,18 @@
+<h1 align="center">pixi-framework - platform for quick game development</h1>
+<p align="center">
+  <img src="public/logo.png" alt="angular-logo" width="120px" height="120px"/>
+  <br>
+  <em>pixi-framework is a development platform for building games for mobile and desktop
+    <br> using pixi-JS game engine.</em>
+  <br>
+</p>
+<hr>
+<p align="center">
+  <a href="https://www.npmjs.com/@weerly_3/pixi-framework">
+    <img src="https://img.shields.io/npm/v/@weerly_3/pixi-framework.svg?logo=npm&logoColor=red&label=NPM+package&color=blue&labelColor=white" alt="pixi-framework on npm" />
+  </a>&nbsp;
+</p>
+
 it's my first try in creating reasonable and helpful tool
 I like games and time to time trying myself in game development
 Once again taking another js game library ( this time it became an PixiJS) 
@@ -11,6 +26,21 @@ Certainly! Here's the complete documentation, including the framework setup. Thi
 # Framework and Game Scene Documentation
 
 This document provides step-by-step guidance on setting up the framework and defining game scenes with proper structure and behavior.
+
+
+## Installation
+
+To install Pixi-Framework, run the following command:
+
+```sh
+npm install @weerly_3/pixi-framework
+```
+
+Or using yarn:
+
+```sh
+yarn add @weerly_3/pixi-framework
+```
 
 ---
 
@@ -116,15 +146,17 @@ export interface SceneLoopHandler {
 
 ### Scene Decorator: Parameters
 
-The `@Scene` decorator configures each scene and determines how the game loop behaves:
+The `@sceneContainer` decorator configures each scene and determines how the game loop behaves:
 
 ```typescript
-@Scene({
+import {sceneContainer} from "./decorators";
+
+@sceneContainer({
     sceneName: string,                      // Name used for scene identification
     config: Partial<ApplicationOptions>,    // Optional custom configuration
-    isTickerOn?: boolean,                   // Enables/disables the ticker (default: false)
-    stateFunction?: string,                 // Name of the state method (if isTickerOn = true)
-    gameLoopFunction?: string,              // Name of the game loop method (if isTickerOn = true)
+    isTickerOn? : boolean,                   // Enables/disables the ticker (default: false)
+    stateFunction? : string,                 // Name of the state method (if isTickerOn = true)
+    gameLoopFunction? : string,              // Name of the game loop method (if isTickerOn = true)
 })
 ```
 
@@ -154,7 +186,7 @@ The `@Scene` decorator configures each scene and determines how the game loop be
 In this example, the game loop is disabled (`isTickerOn = false`), allowing the scene to operate statically:
 
 ```typescript
-@Scene({
+@sceneContainer({
     sceneName: "StaticScene",
     config: DefaultBootConfig,
 })
@@ -180,7 +212,7 @@ export class StaticScene implements GameScene {
 Here, `isTickerOn = true` enables the game loop, and default methods `state` and `gameLoop` are used:
 
 ```typescript
-@Scene({
+@sceneContainer({
     sceneName: "DefaultLoopScene",
     config: DefaultBootConfig,
     isTickerOn: true,
@@ -215,7 +247,7 @@ export class DefaultLoopScene implements GameScene, SceneLoopHandler {
 This example overrides the framework's game loop logic by implementing the `setupTicker` method.
 
 ```typescript
-@Scene({
+@sceneContainer({
     sceneName: "CustomTickerScene",
     isTickerOn: true,
 })
@@ -247,7 +279,7 @@ export class CustomTickerScene implements GameScene {
 Using custom state and game loop methods defined in the scene decorator:
 
 ```typescript
-@Scene({
+@sceneContainer({
     sceneName: "CustomLoopScene",
     config: DefaultBootConfig,
     isTickerOn: true,
@@ -365,7 +397,7 @@ Here’s an example of switching from one scene to another using the `SceneManag
 ### Scene 1: Initial Scene
 
 ```typescript
-@Scene({
+@sceneContainer({
     sceneName: "Scene1",
     config: DefaultBootConfig,
     isTickerOn: false, // optional, isTickerOn is false by default
@@ -394,7 +426,7 @@ export class Scene1 implements GameScene {
 ### Scene 2: Target Scene
 
 ```typescript
-@Scene({
+@sceneContainer({
     sceneName: "Scene2",
     config: DefaultBootConfig,
     isTickerOn: true,
@@ -432,7 +464,7 @@ export class Scene2 implements GameScene, SceneLoopHandler {
 The following example shows a restart mechanism where the same scene is reloaded upon user interaction (e.g., pressing a restart button):
 
 ```typescript
-@Scene({
+@sceneContainer({
     sceneName: "GameLevel",
     config: DefaultBootConfig,
     isTickerOn: true,
@@ -490,7 +522,7 @@ export class GameLevel implements GameScene, SceneLoopHandler {
    - Pair scene switching with animations or delays for smoother transitions (e.g., fade-out, fade-in).
 
 3. **Error Handling**:
-   - Ensure all scene names provided to `SceneManager.switchTo()` are correctly mapped in the `sceneMapper`.
+   - Ensure all scene names provided to `NavigateToScene()` are correctly mapped in the `sceneMapper`.
 
 4. **State Preservation**:
    - If a scene restart is needed but specific data must persist (e.g., player stats), consider manually saving and restoring state.

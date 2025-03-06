@@ -1,10 +1,11 @@
 import {application, initApplication} from "./application";
 import {SceneEventHandler, GameScene, SceneLoopHandler} from "../types/scene.types";
-import {Type} from "./scene-mapper";
 import {Application, Ticker} from "pixi.js";
-import { SceneContent } from "../helpers/decorators";
 import {onKeyDown} from "../helpers/event-wrappers";
 import {isSceneSetup} from "../helpers/type-definition.ts";
+import {InjectorProvider} from "./injector.ts";
+import { SceneContent } from "../types/decorators.ts";
+import { Type } from "../types/general.ts";
 
 /**
  * A generic class that acts as a wrapper for a scene module and provides access
@@ -92,11 +93,13 @@ function attachCanvasToDocument(canvas: HTMLCanvasElement): void {
  * Initializes a game scene by creating an instance of the provided scene class, loading its assets, and returning the instance.
  *
  * @param {Type<GameScene>} scene - The class type of the game scene to initialize.
- * @param {Application} app - The application instance used for initializing the scene.
+ * @param {Application} _app - The application instance used for initializing the scene.
  * @return {Promise<GameScene>} A promise that resolves to the initialized game scene instance.
  */
-async function initializeScene(scene: Type<GameScene>, app: Application): Promise<GameScene> {
-    const sceneInstance = new scene(app);
+async function initializeScene(scene: Type<GameScene>, _app: Application): Promise<GameScene> {
+    InjectorProvider.setProviders([scene]);
+    const sceneInstance = InjectorProvider.getProvider(scene.name) as GameScene;
+    sceneInstance.app = _app;
     await sceneInstance.loadAssets();
     return sceneInstance;
 }
