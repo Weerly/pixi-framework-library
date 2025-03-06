@@ -1,6 +1,8 @@
-import { SceneMapperModule, Type, NavigateToScene } from "./scene-mapper";
-import {GameModuleContent} from "../helpers/decorators";
+import { SceneMapperModule, NavigateToScene } from "./scene-mapper";
 import {initApplication} from "./application";
+import {InjectorProvider} from "./injector.ts";
+import {GameModuleContent} from "../types/decorators.ts";
+import {Type} from "../types/general.ts";
 
 /**
  * The `ModuleWrapper` class provides a wrapper around a module and offers access to its properties.
@@ -34,6 +36,7 @@ class ModuleWrapper <M>{
 export async function GameLoader<M>(module: Type<M>): Promise<void> {
     const instance = new ModuleWrapper(module).ModuleProperties;
     await initApplication(instance.appConfiguration);
+    InjectorProvider.setProviders(instance.providers);
     new SceneMapperModule(instance.sceneMapper);
     NavigateToScene(instance.startScene);
 }

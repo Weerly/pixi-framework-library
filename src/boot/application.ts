@@ -21,10 +21,6 @@ const getApplication = () => {
     return App
 }
 
-export const appTest = (aa: string) => {
-    console.log(aa);
-}
-
 /**
  * Initializes the application with the specified configuration options.
  *

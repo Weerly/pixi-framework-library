@@ -1,6 +1,6 @@
 {
   "name": "@weerly_3/pixi-framework",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "pixi-js framework-like library to make JS game development more easier and quicker.",
   "type": "module",
   "main": "dist/index.js",
@@ -22,14 +22,17 @@
     "type": "git",
     "url": "git+https://github.com/Weerly/pixi-framework-library.git"
   },
+  "contributors": [
+    "weerly"
+  ],
   "keywords": [
     "pixiJS",
     "pixi-framework",
     "js-game-development"
   ],
   "dependencies": {
+    "@pixi/runner": "^7.4.2",
     "pixi.js": "^8.8.0",
-    "rxjs": "7.8.1",
     "typescript": "^5.6.3"
   },
   "author": "weerly_3 (Mykhailo Chumak)",
@@ -37,10 +40,11 @@
   "bugs": {
     "url": "https://github.com/Weerly/pixi-framework-library/issues"
   },
-  "homepage": "https://github.com/Weerly/pixi-framework-library#readme",
+  "homepage": "https://github.com/Weerly/pixi-framework-library/wiki",
   "devDependencies": {
     "@types/node": "^22.8.6",
-    "tsup": "^8.3.6",
+    "tsup": "^8.4.0",
+    "inversify": "^7.0.1",
     "vitest": "^3.0.5"
   }
 }
