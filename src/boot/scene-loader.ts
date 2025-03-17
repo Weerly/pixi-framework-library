@@ -97,9 +97,10 @@ function attachCanvasToDocument(canvas: HTMLCanvasElement): void {
  * @return {Promise<GameScene>} A promise that resolves to the initialized game scene instance.
  */
 async function initializeScene(scene: Type<GameScene>, _app: Application): Promise<GameScene> {
-    const sceneInstance = InjectorProvider.getProvider(scene.name) as GameScene;
+    let sceneInstance = InjectorProvider.getProvider(scene.name) as GameScene;
     if (!sceneInstance) {
         InjectorProvider.setProviders([scene]);
+        sceneInstance = InjectorProvider.getProvider(scene.name) as GameScene;
     }
     sceneInstance.app = _app;
     await sceneInstance.loadAssets();
