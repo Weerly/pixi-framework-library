@@ -17,7 +17,7 @@ export class ContainerManager {
         this._container.bind<T>(identifier).to(implementation);
     }
 
-    public static resolve<T>(identifier: Token): T {
-        return this._container.get<T>(identifier);
+    public static resolve<T>(identifier: Token): T | undefined {
+        return this._container.get<T>(identifier, {optional: true});
     }
 }
